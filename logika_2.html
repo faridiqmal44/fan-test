@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitung Kata</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h3>Input kaos kaki</h3>
+    <input type="text" id="kk" onkeyup="update()"><input type="button" id="hitung" value="Hitung" onclick="hitung()"><input type="button" id="clear" value="Clear" onclick="clear()">
+    <p id="kalimat"></p>
+    <h5></h5>
+    
+</body>
+</html>
+
+<script>    
+    function hitung(){
+        kalimat = $("#kk").val();
+        kalimat = kalimat.replace([',','.'], '');
+        arr_kalimat = kalimat.split(' ');
+
+        jml = checkCharacter(arr_kalimat);
+
+        $("h5").html(jml+' kata');
+    }
+
+    function checkCharacter(arr_kalimat){
+        var format = /[`!@#$%^&*()_+\=\[\]{};':"\\|<>\/~]/;
+        jml = arr_kalimat.length;
+        $.each(arr_kalimat, function(i,v){
+            if(format.test(v)){
+                jml -= 1;
+            }
+        });
+        return jml;
+    }
+
+    $("#clear").click(function(){
+        $("#kk").val("");
+        $("#kk").focus();
+        $("p").html("");
+        arr = [];
+        $("h5").html("");
+        console.clear();
+    });
+
+    function update(){
+        isi = $("#kk").val();
+        $("#kalimat").html(isi);
+    }
+
+</script>

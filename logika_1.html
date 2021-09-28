@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitung Kaos Kaki</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h3>Input kaos kaki</h3>
+    <input type="text" id="kk"><input type="button" id="input" value="Input" onclick="masukan()" ><input type="button" id="clear" value="Clear" onclick="clear()">
+    <p></p>
+    <h5></h5>
+    <input type="button" id="hitung" value="Hitung" onclick="hitung()">
+</body>
+</html>
+
+<script>
+    let arr = [];
+
+    function masukan()
+    {
+        isi = $("#kk").val();
+        arr.push(isi);
+        $("p").append(isi+',');
+        $("#kk").val('');
+        $("#kk").focus();
+    }
+
+    function hitung()
+    {
+        let pasang = 0;
+        arr_unique = Array.from(new Set(arr));
+
+        $.each(arr_unique, function(i,v){
+            jml = count(v,arr);
+            if(jml>1 && jml%2 == 1){
+                jml = (jml - 1) / 2;
+                pasang += jml;
+            } else if(jml>1 && jml%2 == 0){
+                jml = jml / 2;
+                pasang += jml;
+            }
+        });
+
+        $("h5").html(pasang+' pasang');
+    }
+    
+    function count(search, dataset)
+    {
+        var c = dataset.reduce(function(n, val){
+            return n + (val === search);
+        },0);
+        return c;
+    }
+
+    $("#clear").click(function(){
+        $("#kk").val("");
+        $("#kk").focus();
+        $("p").html("");
+        arr = [];
+        $("h5").html("");
+    });
+
+    $(document).on('keypress', function(e){
+        if(e.which == 13){
+            masukan();
+        }
+    })
+
+</script>
